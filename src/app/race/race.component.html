@@ -1,0 +1,64 @@
+<div id='top-wrapper'>
+    <div id='timer'>{{ now | timer }}</div>
+    <div id='top-right-wrapper'>
+        <mat-form-field *ngIf='raceState==0'>
+            <mat-label>Countdown</mat-label>
+            <mat-select [(value)]='countdown'>
+                <mat-option [value]='300'>5 Minuten</mat-option>
+                <mat-option [value]='240'>4 Minuten</mat-option>
+                <mat-option [value]='180'>3 Minuten</mat-option>
+                <mat-option [value]='120'>2 Minuten</mat-option>
+                <mat-option [value]='60'>1 Minute</mat-option>
+                <mat-option [value]='30'>30 Sekunden</mat-option>
+                <mat-option [value]='0'>Sofort</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color='primary' *ngIf='raceState==0' (click)='startRace()'>Start</button>
+        <button mat-raised-button color='warn' *ngIf='raceState>0' (click)='cancelRace()'>{{ raceState==3 ? 'Zurücksetzen' : 'Abbrechen' }}</button>
+    </div>
+</div>
+
+<mat-list *ngIf='raceState==0'>
+    <div mat-subheader>Boote</div>
+    <mat-list-item *ngFor="let boat of boats">
+        <div mat-line>{{ boat.name}}</div>
+        <div mat-line>{{ boat.class.name }}</div>
+        <div class='list-item-spacer'></div>
+        <button mat-icon-button (click)='removeBoat(boat)'><mat-icon>clear</mat-icon></button>
+    </mat-list-item>
+</mat-list>
+
+<mat-list *ngIf='raceState>0'>
+    <ng-container *ngIf='raceState<3'>
+        <div mat-subheader>Boote im Rennen</div>
+        <mat-list-item *ngFor="let boat of boats | isFinished:false">
+            <div mat-line>{{ boat.name }}</div>
+            <div mat-line>{{ boat.class.name }}</div>
+            <div class='list-item-spacer'></div>
+            <button mat-raised-button (click)='boatFinished(boat)' [disabled]='raceState==1'>Im Ziel</button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </ng-container>
+    <div mat-subheader>Boote im Ziel</div>
+    <mat-list-item *ngFor="let boat of boats | isFinished:true">
+        <div mat-line>{{ boat.name }}</div>
+        <div mat-line>{{ boat.class.name }}</div>
+        <div mat-line>Echtzeit: {{ boat.finish | timer }} <b>Yardstickzeit: {{ boat.yardstickFinish | timer }}</b></div>
+    </mat-list-item>
+</mat-list>
+<button mat-button *ngIf='raceState == 3' color='primary' id='share-button' [cdkCopyToClipboard]='getResultString()'><mat-icon>content_copy</mat-icon>Ergebnisse kopieren</button>
+<mat-divider *ngIf='raceState == 0'></mat-divider>
+<div id='newBoatForm' *ngIf='raceState == 0'>
+    <span><b>Weiteres Boot hinzufügen</b></span>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type='text' [(ngModel)]='newBoatName'>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Klasse</mat-label>
+        <mat-select [(value)]='newBoatClass'>
+            <mat-option *ngFor='let boatClass of boatClasses' [value]='boatClass'>{{ boatClass.name }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color='primary' (click)='addBoat()'>Hinzufügen</button>
+</div>

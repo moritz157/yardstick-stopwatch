@@ -1,0 +1,40 @@
+#top-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+
+    #timer {
+        font-size: 2em;
+        font-weight: 500;
+    }
+
+    #top-right-wrapper {
+        display: flex;
+        align-items: center;
+        width: auto;
+        justify-content: space-between;
+
+        mat-form-field {
+            width: 8em;
+            margin-right: 1em;
+        }
+    }
+}
+
+mat-list-item .list-item-spacer {
+    flex: 1;
+}
+
+#share-button {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    width: calc(100% - 40px);
+}
+
+#newBoatForm {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
