@@ -1,1 +1,18 @@
-<router-outlet></router-outlet>
+<mat-toolbar color='primary'>
+    <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon fontSet='material-icons-round'>menu</mat-icon>
+    </button>
+    <span>Yardstick Stopwatch</span>
+</mat-toolbar>
+<mat-drawer-container>
+    <mat-drawer #drawer mode="side">
+        <mat-nav-list role="list">
+            <a mat-list-item role="listitem" *ngFor='let link of navLinks' [href]='link.link'><mat-icon fontSet='material-icons-round'>{{ link.icon }}</mat-icon><span class='nav-item-title'>{{ link.title }}</span></a>
+        </mat-nav-list>
+    </mat-drawer>
+  
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+  
+</mat-drawer-container>

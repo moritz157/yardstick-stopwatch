@@ -11,6 +11,8 @@ import { TimerPipe } from './timer.pipe';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -32,6 +34,8 @@ import { environment } from '../environments/environment';
     MatSelectModule,
     MatInputModule,
     MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
     FormsModule,
     ClipboardModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: "registerImmediately" })
