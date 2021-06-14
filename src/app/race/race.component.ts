@@ -54,6 +54,7 @@ export class RaceComponent {
   raceState: number = 0; //0=Not started, 1=Countdown, 2=Started, 3=Finished
   now: number = 0; //Seconds since start, negative if on countdown 
   countdown: number = 300;
+  preparationSignal: number = 0;
 
   boats: Boat[] = [];
 
@@ -110,6 +111,13 @@ export class RaceComponent {
   startRace() {
     this.now = -this.countdown;
     this.raceState=1;
+
+    this.flags.p = this.preparationSignal==0;
+    this.flags.i = this.preparationSignal==1 || this.preparationSignal==3;
+    this.flags.z = this.preparationSignal==2 || this.preparationSignal==3;
+    this.flags.u = this.preparationSignal==4;
+    this.flags.black = this.preparationSignal==5;
+
     this.checkForSignals();
   }
 
