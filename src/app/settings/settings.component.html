@@ -1,0 +1,9 @@
+<div class='page-container'>
+    <h1>Einstellungen</h1>
+    <ng-container *ngFor='let group of settingGroups'>
+        <h2>{{ group.title }}</h2>
+        <div *ngFor='let setting of group.inputs'>
+            <mat-slide-toggle *ngIf='setting.type=="boolean"' [checked]='setting.value ? setting.value : setting.default' (change)='settingInputChangeHandler($event, group, setting)'>{{ setting.title }}</mat-slide-toggle>
+        </div>
+    </ng-container>
+</div>

@@ -9,7 +9,7 @@ export class AppComponent {
   navLinks = [{
     title: 'Rennen',
     link: 'race',
-    icon: 'home'
+    icon: 'sports_score'
   }, {
     title: 'Regeln',
     link: 'rules',

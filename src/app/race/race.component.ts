@@ -1,6 +1,7 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Boat, BoatClass, BoatService } from '../services/boat.service';
+import { SettingsService } from '../services/settings.service';
 import { YardstickService } from '../services/yardstick.service';
 import { TimerPipe } from '../timer.pipe';
 
@@ -37,7 +38,7 @@ export class RaceComponent {
   newBoatClass: BoatClass = undefined;
   boatClasses: BoatClass[] = [];
 
-  constructor(private boatService: BoatService, private yardstickService: YardstickService, private timerPipe: TimerPipe){
+  constructor(private boatService: BoatService, private yardstickService: YardstickService, private settings: SettingsService, private timerPipe: TimerPipe){
     setInterval(() => {
       if(this.raceState>0 && this.raceState<3) this.now++;
       
@@ -94,9 +95,10 @@ export class RaceComponent {
   }
 
   private checkForSignals() {
+    if(this.settings.getSetting('starting.toneSignals')=='false') return;
     if(this.SIGNALS[-this.now] && this.SIGNALS[-this.now].horn) {
       let signal = this.SIGNALS[-this.now].horn;
-      console.log('HORN:', signal);
+      console.log('HORN:', signal, this.settings.getSetting('starting.toneSignals'));
       if(signal=='.') this.horn('short')
       else if(signal=='-') this.horn('long')
     } 

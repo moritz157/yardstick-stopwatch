@@ -2,6 +2,10 @@ mat-drawer {
     width: 200px;
 }
 
+mat-drawer-container {
+    height: calc(100% - 64px);
+}
+
 a.mat-list-item span.nav-item-title {
     margin-left: 10px;
 }

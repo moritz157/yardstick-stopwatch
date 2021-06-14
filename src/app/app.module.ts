@@ -13,17 +13,20 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RaceComponent,
     TimerPipe,
-    IsFinishedPipe
+    IsFinishedPipe,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { environment } from '../environments/environment';
     MatIconModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatSlideToggleModule,
     FormsModule,
     ClipboardModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: "registerImmediately" })
