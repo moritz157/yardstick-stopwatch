@@ -14,18 +14,41 @@ import { TimerPipe } from '../timer.pipe';
 export class RaceComponent {
 
   SIGNALS = {
-    300: {
-      horn: '.'
-    }, //5 Minutes
-    240: {
-      horn: '.'
-    }, //4 Minutes
-    60: {
-      horn: '.'
-    }, //1 Minute
-    0: {
-      horn: '-'
+    300: { //5 Minutes
+      horn: '.',
+      flags: {
+        class: true
+      }
+    },
+    240: { //4 Minutes
+      horn: '.',
+      flags: {
+        preparatory: true
+      }
+    },
+    60: { //1 Minute
+      horn: '-',
+      flags: {
+        preparatory: false
+      }
+    },
+    0: { //START
+      horn: '-',
+      flags: {
+        class: false
+      }
     }
+  }
+  
+  showFlags = false;
+  flags = {
+    preparatory: false,
+    class: false,
+    p: true,
+    i: false,
+    z: false,
+    u: true,
+    black: false
   }
 
   raceState: number = 0; //0=Not started, 1=Countdown, 2=Started, 3=Finished
@@ -59,6 +82,8 @@ export class RaceComponent {
         this.boats = []; 
       }
     }
+
+    this.showFlags = this.settings.getSetting('starting.showFlags') === 'true';
   }
 
   addBoat() {
@@ -95,12 +120,21 @@ export class RaceComponent {
   }
 
   private checkForSignals() {
-    if(this.settings.getSetting('starting.toneSignals')=='false') return;
     if(this.SIGNALS[-this.now] && this.SIGNALS[-this.now].horn) {
-      let signal = this.SIGNALS[-this.now].horn;
-      console.log('HORN:', signal, this.settings.getSetting('starting.toneSignals'));
-      if(signal=='.') this.horn('short')
-      else if(signal=='-') this.horn('long')
+      // flag signals
+      console.log('Flags', this.SIGNALS[-this.now].flags, this.flags);
+      if(this.SIGNALS[-this.now].flags) {
+        for(let flag in this.SIGNALS[-this.now].flags) {
+          if(this.flags[flag] !== undefined) this.flags[flag] = this.SIGNALS[-this.now].flags[flag];
+        }
+      }
+      // sound signals
+      if(this.settings.getSetting('starting.toneSignals')==='true') {
+        let soundSignal = this.SIGNALS[-this.now].horn;
+        console.log('HORN:', soundSignal, this.settings.getSetting('starting.toneSignals'));
+        if(soundSignal=='.') this.horn('short')
+        else if(soundSignal=='-') this.horn('long')
+      }
     } 
   }
 
