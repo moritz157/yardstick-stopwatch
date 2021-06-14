@@ -67,6 +67,7 @@ mat-list-item .list-item-spacer {
 @media screen and (max-width: 599px) {
     #top-wrapper {
         align-items: flex-start;
+        flex-direction: column;
 
         #top-left-wrapper {
             flex-direction: column;
@@ -79,13 +80,28 @@ mat-list-item .list-item-spacer {
             }
 
             #flags {
-                margin-left: 0px;
-                margin-top: 30px;
+                margin: 15px 0 0 0;
                 flex-wrap: wrap;
 
                 .flag {
                     margin: 0 10px 10px 0;
                 }
+            }
+        }
+
+        #top-right-wrapper {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+            padding-top: 15px;
+
+            mat-form-field {
+                width: unset;
+                margin: 0;
+            }
+        
+            button {
+                width: 100%;
             }
         }
     }
