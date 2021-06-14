@@ -48,7 +48,8 @@ export class RaceComponent {
     i: false,
     z: false,
     u: true,
-    black: false
+    black: false,
+    x: false
   }
 
   raceState: number = 0; //0=Not started, 1=Countdown, 2=Started, 3=Finished
@@ -71,7 +72,12 @@ export class RaceComponent {
       }
       
       if(this.raceState == 1 && this.now >= 0) this.raceState=2;
-    }, 1000);
+
+      if(this.now>240) {
+        this.flags.x = false;// Take down X-Flag if the race is running for at least 4 minutes
+        for(let boat of this.boats) boat.scoring = boat.earlyStart ? 'OCS' : boat.scoring; // Set non-started boats to OCS
+      }
+    }, 100);
     this.boatClasses = this.boatService.boatClasses;
 
     if(window.localStorage.getItem('boats')) {
@@ -88,7 +94,7 @@ export class RaceComponent {
   }
 
   addBoat() {
-    this.boats.push({ name: this.newBoatName, class: this.newBoatClass, finish: -1 });
+    this.boats.push({ name: this.newBoatName, class: this.newBoatClass, finish: -1, earlyStart: false });
     this.newBoatName = '';
     this.newBoatClass = undefined;
     window.localStorage.setItem('boats', JSON.stringify(this.boats));
@@ -97,6 +103,29 @@ export class RaceComponent {
   removeBoat(boat: Boat) {
     this.boats.splice(this.boats.findIndex(b => b.name == boat.name && b.class.name == boat.class.name), 1);
     window.localStorage.setItem('boats', JSON.stringify(this.boats));
+  }
+
+  boatStartedEarly(boat) {
+    boat.earlyStart = true;
+    if(!this.flags.x && this.preparationSignal!==4 && this.preparationSignal!==5) {
+      this.flags.x = true;
+      this.horn('short');
+    }
+  }
+
+  boatCompletedEarlyStartPenalty(boat) {
+    boat.earlyStart = false;
+    var earlyStartersLeft = false;
+    for(let boat of this.boats) {
+      if(boat.earlyStart) {
+        earlyStartersLeft=true;
+        break;
+      }
+    }
+
+    if(!earlyStartersLeft) {
+      this.flags.x = false;
+    }
   }
 
   boatFinished(boat) {
@@ -124,7 +153,10 @@ export class RaceComponent {
   cancelRace() {
     this.raceState = 0;
     this.now = 0;
-    for(let boat of this.boats) boat.finish = -1;
+    for(let boat of this.boats) {
+      boat.earlyStart = false;
+      boat.finish = -1;
+    }
   }
 
   private checkForSignals() {

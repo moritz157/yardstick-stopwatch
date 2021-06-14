@@ -10,6 +10,7 @@
                 <div class='flag' *ngIf='flags.u'><img src='../../assets/flags/flag-u.svg' /></div>
                 <div class='flag' *ngIf='flags.black'><img src='../../assets/flags/flag-black.svg' /></div>
             </ng-container>
+            <div class='flag' *ngIf='flags.x'><img src='../../assets/flags/flag-x.svg' /></div>
         </div>
     </div>
     <div id='top-right-wrapper'>
@@ -57,7 +58,11 @@
         <mat-list-item *ngFor="let boat of boats | isFinished:false">
             <div mat-line>{{ boat.name }}</div>
             <div mat-line>{{ boat.class.name }}</div>
+            <div mat-line *ngIf='boat.scoring !== undefined'>{{ boat.scoring }}</div>
+            <div mat-line *ngIf='boat.earlyStart && now < 240'><b>Fehlstart</b></div>
             <div class='list-item-spacer'></div>
+            <button mat-button color='warn' (click)='boatStartedEarly(boat)' *ngIf='!boat.earlyStart && (((preparationSignal===1 || preparationSignal===3) && raceState==1 && now>=-60) || (raceState==2 && now < 30))'>Fehlstart</button>
+            <button mat-button color='primary' (click)='boatCompletedEarlyStartPenalty(boat)' *ngIf='boat.earlyStart && preparationSignal<4 && now<240'>Fehlstart auflösen</button>
             <button mat-raised-button (click)='boatFinished(boat)' [disabled]='raceState==1'>Im Ziel</button>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -66,6 +71,7 @@
     <mat-list-item *ngFor="let boat of boats | isFinished:true">
         <div mat-line>{{ boat.name }}</div>
         <div mat-line>{{ boat.class.name }}</div>
+        <div mat-line *ngIf='boat.scoring !== undefined'>{{ boat.scoring }}</div>
         <div mat-line>Echtzeit: {{ boat.finish | timer }} <b>Yardstickzeit: {{ boat.yardstickFinish | timer }}</b></div>
     </mat-list-item>
 </mat-list>

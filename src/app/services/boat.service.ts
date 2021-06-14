@@ -39,6 +39,8 @@ export interface BoatClass {
 export interface Boat {
   name: string;
   class: BoatClass;
+  earlyStart: boolean;
   finish: number;
+  scoring?: string;
   yardstickFinish?: number;
 }
