@@ -1,0 +1,7 @@
+<mat-form-field class='boat-action'>
+    <mat-label>Wertung</mat-label>
+    <mat-select [value]='value' (selectionChange)='handleValueChange($event)'>
+        <mat-option [value]='-1'>Keine Wertung</mat-option>
+        <mat-option *ngFor='let scoringOption of scoringEnumList; let i = index' [value]='i'>{{ scoringOption }} | {{ i | scoring : 'true' }}</mat-option>
+    </mat-select>
+</mat-form-field>

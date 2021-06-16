@@ -55,15 +55,17 @@
 <mat-list *ngIf='raceState>0'>
     <ng-container *ngIf='raceState<3'>
         <div mat-subheader>Boote im Rennen</div>
-        <mat-list-item *ngFor="let boat of boats | isFinished:false">
+        <mat-list-item *ngFor="let boat of boats | isFinished:false" (click)='(((preparationSignal!==0 && preparationSignal!==2) && raceState==1 && now>=-60) || (raceState==2 && now < 30)) && openScoringDialog(boat)'>
             <div mat-line>{{ boat.name }}</div>
             <div mat-line>{{ boat.class.name }}</div>
-            <div mat-line *ngIf='boat.scoring !== undefined'>{{ boat.scoring }}</div>
-            <div mat-line *ngIf='boat.earlyStart && now < 240'><b>Fehlstart</b></div>
+            <div mat-line *ngIf='boat.scoring !== -1'>{{ boat.scoring | scoring }}</div>
+            <div mat-line *ngIf='boat.earlyStart && now < 240 && preparationSignal < 4'><b>Fehlstart</b></div>
             <div class='list-item-spacer'></div>
-            <button mat-button color='warn' (click)='boatStartedEarly(boat)' *ngIf='!boat.earlyStart && (((preparationSignal===1 || preparationSignal===3) && raceState==1 && now>=-60) || (raceState==2 && now < 30))'>Fehlstart</button>
-            <button mat-button color='primary' (click)='boatCompletedEarlyStartPenalty(boat)' *ngIf='boat.earlyStart && preparationSignal<4 && now<240'>Fehlstart auflösen</button>
-            <button mat-raised-button (click)='boatFinished(boat)' [disabled]='raceState==1'>Im Ziel</button>
+            <scoring-select [(value)]='boat.scoring' class='show-on-desktop'></scoring-select>
+            <button class='boat-action' mat-button color='primary' (click)='openScoringDialog(boat)' *ngIf='!(((preparationSignal!==0 && preparationSignal!==2) && raceState==1 && now>=-60) || (raceState==2 && now < 30))' class='show-on-mobile'>Wertung</button>
+            <button class='boat-action' mat-button color='warn' (click)='boatStartedEarly(boat, $event)' *ngIf='!boat.earlyStart && (((preparationSignal!==0 && preparationSignal!==2) && raceState==1 && now>=-60) || (raceState==2 && now < 30))'>Fehlstart</button>
+            <button class='boat-action' mat-button color='primary' (click)='boatCompletedEarlyStartPenalty(boat, $event)' *ngIf='boat.earlyStart && preparationSignal<4 && now<240'>Fehlstart auflösen</button>
+            <button class='boat-action' mat-raised-button (click)='boatFinished(boat, $event)' [disabled]='raceState==1'>Im Ziel</button>
         </mat-list-item>
         <mat-divider></mat-divider>
     </ng-container>
@@ -71,7 +73,7 @@
     <mat-list-item *ngFor="let boat of boats | isFinished:true">
         <div mat-line>{{ boat.name }}</div>
         <div mat-line>{{ boat.class.name }}</div>
-        <div mat-line *ngIf='boat.scoring !== undefined'>{{ boat.scoring }}</div>
+        <div mat-line *ngIf='boat.scoring !== undefined'>{{ boat.scoring | scoring }}</div>
         <div mat-line>Echtzeit: {{ boat.finish | timer }} <b>Yardstickzeit: {{ boat.yardstickFinish | timer }}</b></div>
     </mat-list-item>
 </mat-list>

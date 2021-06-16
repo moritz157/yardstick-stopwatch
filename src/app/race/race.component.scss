@@ -47,8 +47,18 @@
     }
 }
 
-mat-list-item .list-item-spacer {
-    flex: 1;
+mat-list-item {
+    .list-item-spacer {
+        flex: 1;
+    }
+
+    .boat-action {
+        margin: 0 10px;
+    }
+
+    .boat-action:last-child {
+        margin: 0 0 0 10px;
+    }
 }
 
 #share-button {

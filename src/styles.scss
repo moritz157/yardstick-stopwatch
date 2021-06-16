@@ -6,3 +6,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .page-container {
     padding: 20px;
 }
+
+@media screen and (min-width: 600px) {
+    .show-on-mobile {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .show-on-desktop {
+        display: none;
+    }
+
+    .show-on-mobile {
+        display: block;
+    }
+}

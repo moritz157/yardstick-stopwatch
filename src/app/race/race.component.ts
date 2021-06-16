@@ -1,9 +1,11 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Boat, BoatClass, BoatService } from '../services/boat.service';
 import { SettingsService } from '../services/settings.service';
 import { YardstickService } from '../services/yardstick.service';
 import { TimerPipe } from '../timer.pipe';
+import { ScoringPipe, Scorings } from '../enums/scorings';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-race',
@@ -12,6 +14,8 @@ import { TimerPipe } from '../timer.pipe';
   providers: [ TimerPipe ]
 })
 export class RaceComponent {
+
+  scoringEnumList = [];
 
   SIGNALS = {
     300: { //5 Minutes
@@ -63,7 +67,7 @@ export class RaceComponent {
   newBoatClass: BoatClass = undefined;
   boatClasses: BoatClass[] = [];
 
-  constructor(private boatService: BoatService, private yardstickService: YardstickService, private settings: SettingsService, private timerPipe: TimerPipe){
+  constructor(private dialog: MatDialog, private boatService: BoatService, private yardstickService: YardstickService, private settings: SettingsService, private timerPipe: TimerPipe){
     setInterval(() => {
       if(this.raceState>0 && this.raceState<3) this.now++;
       
@@ -73,9 +77,9 @@ export class RaceComponent {
       
       if(this.raceState == 1 && this.now >= 0) this.raceState=2;
 
-      if(this.now>240) {
+      if(this.now>240 && this.preparationSignal < 4) {
         this.flags.x = false;// Take down X-Flag if the race is running for at least 4 minutes
-        for(let boat of this.boats) boat.scoring = boat.earlyStart ? 'OCS' : boat.scoring; // Set non-started boats to OCS
+        for(let boat of this.boats) boat.scoring = boat.earlyStart ? Scorings.OCS : boat.scoring; // Set non-started boats to OCS
       }
     }, 1000);
     this.boatClasses = this.boatService.boatClasses;
@@ -94,7 +98,7 @@ export class RaceComponent {
   }
 
   addBoat() {
-    this.boats.push({ name: this.newBoatName, class: this.newBoatClass, finish: -1, earlyStart: false });
+    this.boats.push({ name: this.newBoatName, class: this.newBoatClass, finish: -1, earlyStart: false, scoring: -1 });
     this.newBoatName = '';
     this.newBoatClass = undefined;
     window.localStorage.setItem('boats', JSON.stringify(this.boats));
@@ -105,15 +109,21 @@ export class RaceComponent {
     window.localStorage.setItem('boats', JSON.stringify(this.boats));
   }
 
-  boatStartedEarly(boat) {
+  boatStartedEarly(boat, event) {
+    event.stopPropagation();
     boat.earlyStart = true;
     if(!this.flags.x && this.preparationSignal!==4 && this.preparationSignal!==5) {
       this.flags.x = true;
       this.horn('short');
+    } else if(this.preparationSignal==4) {
+      boat.scoring = Scorings.UFD;
+    } else if(this.preparationSignal==5) {
+      boat.scoring = Scorings.BFD;
     }
   }
 
-  boatCompletedEarlyStartPenalty(boat) {
+  boatCompletedEarlyStartPenalty(boat, event) {
+    event.stopPropagation();
     boat.earlyStart = false;
     var earlyStartersLeft = false;
     for(let boat of this.boats) {
@@ -128,7 +138,8 @@ export class RaceComponent {
     }
   }
 
-  boatFinished(boat) {
+  boatFinished(boat, event) {
+    event.stopPropagation();
     boat.finish = this.now;  
     boat.yardstickFinish = this.yardstickService.calculateYardstickTime(boat.finish, boat.class.yardstickNumber); 
     this.horn('short'); 
@@ -156,6 +167,7 @@ export class RaceComponent {
     for(let boat of this.boats) {
       boat.earlyStart = false;
       boat.finish = -1;
+      boat.scoring = -1;
     }
   }
 
@@ -189,10 +201,19 @@ export class RaceComponent {
     let result = `Ergebnisse der Regatta:\n`;
     let i = 1;
     for(let boat of this.boats.sort((a, b) => a.yardstickFinish - b.yardstickFinish)) {
-      result += `\nPlatz ${i}\n${boat.name} (${boat.class.name})\nYardstickzeit: ${this.timerPipe.transform(boat.yardstickFinish)}\nEchtzeit: ${this.timerPipe.transform(boat.finish)}\n`;
+      result += `\nPlatz ${i}\n${boat.name} (${boat.class.name})\n${(new ScoringPipe()).transform(boat.scoring, false)} (${(new ScoringPipe()).transform(boat.scoring, true)})\nYardstickzeit: ${this.timerPipe.transform(boat.yardstickFinish)}\nEchtzeit: ${this.timerPipe.transform(boat.finish)}\n`;
       i++;
     }
     return result;
+  }
+
+  openScoringDialog(boat) {
+    const dialogRef = this.dialog.open(RaceBoatScoringDialogComponent, { data: boat.scoring });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === undefined) return;
+      boat.scoring = result;
+    });
   }
 
 }
@@ -211,4 +232,22 @@ export class IsFinishedPipe implements PipeTransform {
       if(finished) return items.filter(item => item.finish !== -1).sort((a, b) => a.yardstickFinish - b.yardstickFinish);
       else return items.filter(item => item.finish == -1);
   }
+}
+
+@Component({
+  selector: 'race-boat-scoring-dialog',
+  template: `
+    <h2>Wertung eintragen</h2>
+    <mat-dialog-content>
+      <scoring-select [(value)]='scoringValue'></scoring-select> 
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="undefined">Abbrechen</button>
+      <button mat-button [mat-dialog-close]="scoringValue" cdkFocusInitial>Okay</button>
+    </mat-dialog-actions>
+  `
+})
+export class RaceBoatScoringDialogComponent {
+// [(value)]='boat.scoring'
+  constructor(@Inject(MAT_DIALOG_DATA) public scoringValue: number) {}
 }

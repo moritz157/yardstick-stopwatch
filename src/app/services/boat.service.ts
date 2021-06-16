@@ -41,6 +41,6 @@ export interface Boat {
   class: BoatClass;
   earlyStart: boolean;
   finish: number;
-  scoring?: string;
+  scoring: number;
   yardstickFinish?: number;
 }
