@@ -19,6 +19,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SettingsComponent } from './settings/settings.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,6 @@ import { SettingsComponent } from './settings/settings.component';
     ClipboardModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: "registerImmediately" })
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

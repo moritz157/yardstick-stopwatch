@@ -77,7 +77,7 @@ export class RaceComponent {
         this.flags.x = false;// Take down X-Flag if the race is running for at least 4 minutes
         for(let boat of this.boats) boat.scoring = boat.earlyStart ? 'OCS' : boat.scoring; // Set non-started boats to OCS
       }
-    }, 100);
+    }, 1000);
     this.boatClasses = this.boatService.boatClasses;
 
     if(window.localStorage.getItem('boats')) {
@@ -180,7 +180,7 @@ export class RaceComponent {
 
   horn(length: string){
     let audio = new Audio();
-    audio.src = "../../../assets/horn_2_"+length+".mp3";
+    audio.src = "assets/horn_2_"+length+".mp3";
     audio.load();
     audio.play();
   }

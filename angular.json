@@ -50,6 +50,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "baseHref": "/yardstick-stopwatch/",
               "budgets": [
                 {
                   "type": "initial",

@@ -2,15 +2,15 @@
     <div id='top-left-wrapper'>
         <div id='timer'>{{ now | timer }}</div>
         <div id='flags' *ngIf='showFlags && raceState>0'>
-            <div class='flag' *ngIf='flags.class'><img src='../../assets/flags/flag-class-generic.svg' /></div>
+            <div class='flag' *ngIf='flags.class'><img src='assets/flags/flag-class-generic.svg' /></div>
             <ng-container *ngIf='flags.preparatory'>
-                <div class='flag' *ngIf='flags.p'><img src='../../assets/flags/flag-p.svg' /></div>
-                <div class='flag' *ngIf='flags.i'><img src='../../assets/flags/flag-i.svg' /></div>
-                <div class='flag' *ngIf='flags.z'><img src='../../assets/flags/flag-z.svg' /></div>
-                <div class='flag' *ngIf='flags.u'><img src='../../assets/flags/flag-u.svg' /></div>
-                <div class='flag' *ngIf='flags.black'><img src='../../assets/flags/flag-black.svg' /></div>
+                <div class='flag' *ngIf='flags.p'><img src='assets/flags/flag-p.svg' /></div>
+                <div class='flag' *ngIf='flags.i'><img src='assets/flags/flag-i.svg' /></div>
+                <div class='flag' *ngIf='flags.z'><img src='assets/flags/flag-z.svg' /></div>
+                <div class='flag' *ngIf='flags.u'><img src='assets/flags/flag-u.svg' /></div>
+                <div class='flag' *ngIf='flags.black'><img src='assets/flags/flag-black.svg' /></div>
             </ng-container>
-            <div class='flag' *ngIf='flags.x'><img src='../../assets/flags/flag-x.svg' /></div>
+            <div class='flag' *ngIf='flags.x'><img src='assets/flags/flag-x.svg' /></div>
         </div>
     </div>
     <div id='top-right-wrapper'>
