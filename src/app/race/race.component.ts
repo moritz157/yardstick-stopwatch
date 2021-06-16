@@ -162,13 +162,19 @@ export class RaceComponent {
   }
 
   cancelRace() {
-    this.raceState = 0;
-    this.now = 0;
-    for(let boat of this.boats) {
-      boat.earlyStart = false;
-      boat.finish = -1;
-      boat.scoring = -1;
-    }
+    const dialogRef = this.dialog.open(ConfirmRaceCancelDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === false) return;
+      
+      this.raceState = 0;
+      this.now = 0;
+      for(let boat of this.boats) {
+        boat.earlyStart = false;
+        boat.finish = -1;
+        boat.scoring = -1;
+      }
+    });
   }
 
   private checkForSignals() {
@@ -250,4 +256,22 @@ export class IsFinishedPipe implements PipeTransform {
 export class RaceBoatScoringDialogComponent {
 // [(value)]='boat.scoring'
   constructor(@Inject(MAT_DIALOG_DATA) public scoringValue: number) {}
+}
+
+//---------------------
+
+@Component({
+  selector: 'confirm-race-cancel-dialog',
+  template: `
+    <h2>Wirklich abbrechen</h2>
+    <mat-dialog-content>
+      <p>Bist du sicher, dass du die Wettfahrt abbrechen willst?</p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="false" cdkFocusInitial>Nein</button>
+      <button mat-button color='warn' [mat-dialog-close]="true">Ja, Wettfahrt abbrechen</button>
+    </mat-dialog-actions>
+  `
+})
+export class ConfirmRaceCancelDialogComponent {
 }
