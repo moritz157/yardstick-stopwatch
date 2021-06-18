@@ -1,0 +1,25 @@
+<div class='page-container'>
+    <h1>Wettfahrtregeln</h1>
+    <mat-accordion multi>
+        <mat-expansion-panel *ngFor='let part of ruleParts'>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ part.title }}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ part.description }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+      
+          <ng-container *ngFor='let section of part.sections'>
+            <h2>{{ section.id }} {{ section.title }}</h2>
+            <p class='rule-content' *ngIf='section.content'>{{ section.content }}</p>
+            <ng-container *ngFor='let rule of section.rules'>
+                <h3>{{ rule.id }} {{ rule.title }}</h3>
+                <p class='rule-content'>{{ rule.content }}</p>
+            </ng-container>
+          </ng-container>
+      
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

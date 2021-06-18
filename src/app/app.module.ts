@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -23,6 +24,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { ScoringPipe } from './enums/scorings';
 import { ScoringSelectComponent } from './utils/scoring-select/scoring-select.component';
+import { RulesComponent } from './rules/rules.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { ScoringSelectComponent } from './utils/scoring-select/scoring-select.co
     SettingsComponent,
     ScoringPipe,
     ScoringSelectComponent,
+    RulesComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { ScoringSelectComponent } from './utils/scoring-select/scoring-select.co
     MatSidenavModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatExpansionModule,
     FormsModule,
     ClipboardModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: "registerImmediately" })
