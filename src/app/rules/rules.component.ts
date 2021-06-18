@@ -227,51 +227,130 @@ export class RulesComponent implements OnInit {
       sections: [{
         id: '25',
         title: 'Ausschreibung, Segelanweisungen und Signale',
-        rules: []
+        rules: [{
+          id: '25.1',
+          title: '',
+          content: 'Die Ausschreibung und die Segelanweisungen müssen für jedes Boot vor Wettfahrtbeginn zur Verfügung stehen.'
+        }, {
+          id: '25.2',
+          title: '',
+          content: 'Die Bedeutungen der optischen Signale und der Schallsignale, die in "Wettfahrtsignale" definiert sind, dürfen nicht verändert werden, außer gemäß Regel 86.1(b). Die Bedeutungen anderer Signale, die benutzt werden können, müssen in der Ausschreibung oder den Segelanweisungen beschrieben sein.'
+        }, {
+          id: '25.3',
+          title: '',
+          content: 'Wenn das Zeigen einer Flagge als optisches Signal durch das Wettfahrtkomitee gefordert wird, kann es entweder eine Flagge oder ein anderes Objekt von ähnlichem Aussehen verwenden.'
+        }]
       },{
         id: '26',
         title: 'Starten von Wettahrten',
-        rules: []
+        rules: [],
+        content: `Wettfahrten müssen unter Verwendung der folgenden Signale gestartet werden. Die Zeitgebung erfolgt durch die optischen Signale. Das Ausbleiben eines Schallsignals ist nicht zu beachten.\n
+Minuten vor Startsignal\tOptisches Signal                          \t\tSchallsignal\t\tBedeutung
+5*                     \t\t\tKlassenflagge                       \t\t\tEins        \t\tAnkündigungssignal
+4                      \t\t\tP, I, Z, Z+I, U oder schwarze Flagge  \t\tEins        \t\tVorbereitungssignal
+1                      \t\t\tVorbereitungssignal entfernt          \t\tEin langes  \t\tEine Minute
+0                      \t\t\tKlassenflagge entfernt                \t\tEins        \t\tStartsignale
+
+*oder wie in den Segelanweisungen beschrieben
+
+Das Ankündigungssignal für jede folgende Klasse muss mit oder nach dem Startsignal der vorangehenden Klasse gegeben werden.`
       },{
         id: '27',
         title: 'Weitere Maßnahmen des Wettfahrtkomitees vor dem Startsignal',
-        rules: []
+        rules: [{
+          id: '27.1',
+          title: '',
+          content: 'Spätestens bis zum Ankündigungssignal muss das Wettfahrtkomitee die abzusegelnde Bahn signalisieren oder anderweitig bekannt geben, wenn die Segelanweisungen die Bahn nicht festgelegt haben und sie darf ein Bahnsignal durch ein anderes ersetzen und anzeigen, dass persönliche Auftriebsmittel anzulegen sind (Zeigen der Flagge Y mit einem Schallsignal).'
+        }, {
+          id: '27.2',
+          title: '',
+          content: 'Spätestens bis zum Vorbereitungssignal darf das Wettfahrtkomitee eine Start-Bahnmarke verlegen.'
+        }, {
+          id: '27.3',
+          title: '',
+          content: 'Vor dem Startsignal darf das Wettfahrtkomitee eine Wettfahrt aus beliebigen Gründen verschieben (Zeigen der Flagge AP, AP über H oder AP über A, mit zwei Schallsignalen) oder abbrechen (Zeigen der Flagge N über H oder N über A, mit drei Schallsignalen).'
+        }]
       },{
         id: '28',
         title: 'Absegeln der Bahn',
-        rules: []
+        rules: [{
+          id: '28.1',
+          title: '',
+          content: 'Ein Boot muss starten, die in den Segelanweisungen beschriebene Bahn segeln und durch das Ziel gehen. Während es das tut, darf es eine Bahnmarke auf beliebiger Seite lassen, die den Schenkel auf dem es segelt weder beginnt, begrenzt noch beendet. Nach dem Zieldurchgang muss es die Ziellinie nicht vollständig durchsegeln.'
+        }, {
+          id: '28.2',
+          title: '',
+          content: 'Eine Schnur, die die Spur eines Bootes von dem Zeitpunkt an darstellt, an dem es sich der Startlinie von der Vorstartseite nähert um zu starten, bis es durchs Ziel geht, muss, wenn diese straff gezogen wird,\n\n(a) jede Bahnmarke auf der richtigen Seite und in der richtigen Reihenfolge passieren,\n\n(b) alle zu rundenen Bahnmarken berühren, und\n\n(c) zwischen den Bahnmarken eines Tores, aus der Richtung der vorherigen Bahnmarke kommend, hindurchführen.\n\nEs kann jeden Fehler korrigieren, um dieser Regel zu entsprechen, sofern es noch nicht durchs Ziel gegangen ist.'
+        }]
       },{
         id: '29',
         title: 'Rückrufe',
-        rules: []
+        rules: [{
+          id: '29.1',
+          title: 'Einzelrückruf',
+          content: 'Befindet sich beim Startsignal eines Bootes irgendein Teil seines Bootskörpers, der Mannschaft oder der Ausrüstung auf der Bahnseite der Startlinie oder unterliegt es Regel 30.1, muss das Wettfahrtkomitee unverzüglich die Flagge X mit einem Schallsignal zeigen. Die Flagge muss gezeigt bleiben, bis alle betroffenen Boote vollständig auf die Vorstartseite der Startlinie oder einer ihrer Verlängerungen gesegelt sind und, falls nötig, ihren Verpflichtungen nach Regel 30.1 nachgekommen sind, aber nicht später als vier Minuten nach dem Startsignal oder eine Minute vor einem späteren Startsignal, je nachdem, was früher ist. Wenn Regel 30.3 oder 30.4 gilt, gilt diese Regel nicht.'
+        }, {
+          id: '29.2',
+          title: 'Allgemeiner Rückruf',
+          content: 'Wenn das Wettfahrtkomitee beim Startsignal Boote, die auf der Bahnseite der Startlinie sind oder für die Regel 30 gilt, nicht identifizieren kann oder wenn ein Fehler im Startverfahren vorgekommen ist, kann das Wettfahrtkomitee einen allgemeinen Rückruf anzeigen (Zeigen des Ersten Hilfsstanders mit zwei Schallsignalen). Das Ankündigungssignal für einen neuen Start der zurückgerufenen Klasse muss 1 Minute nach dem Niederholen des Ersten Hilfsstanders gegeben werden (1 Schallsignal), und die Starts für nachfolgende Klassen folgen diesem neuen Start.'
+        }]
       },{
         id: '30',
         title: 'Startstrafen',
-        rules: []
+        rules: [{
+          id: '30.1',
+          title: 'I-Flaggen-Regel',
+          content: 'War die Flagge I gezeigt, gilt: Befindet sich irgendein Teil des Bootskörpers, der Mannschaft oder der Ausrüstung des Bootes während der letzten Minute vor seinem Startsignal auf der Bahnseite der Startlinie oder einer ihrer Verlängerungen, muss das Boot über eine der Verlängerungen auf die Vorstartseite segeln, bevor es startet.'
+        }, {
+          id: '30.2',
+          title: 'Z-Flaggen-Regel',
+          content: 'War die Flagge Z gezeigt, darf ein Boot mit keinem Teil seines Rumpfes, der Besatzung oder der Ausrüstung während der letzten Minute vor seinem Startsignal in dem Dreieck sein, das aus den Enden der Startlinie und der ersten Bahnmarke gebildet wird. Verstößt ein Boot gegen diese Regel und wird es erkannt, muss es ohne Anhörung eine 20%-Wertungsstrafe, berechnet nach der Festlegung in Regel 44.3(c) erhalten.\n\nAuch wenn die Wettfahrt wieder gestartet oder wieder gesegelt wird, bleibt die Wertungsstrafe bestehen, jedoch nicht, wenn sie vor dem Startsignal verschoben oder abgebrochen wird. Wenn es in ähnlicher Weise bei einem folgenden Startversuch zur selben Wettfahrt erkannt wird, erhält es eine zusätzliche 20%-Wertungsstrafe.'
+        }, {
+          id: '30.3',
+          title: 'U-Flaggen-Regel',
+          content: 'War die Flagge U gezeigt, darf ein Boot mit keinem Teil seines Rumpfes, der Besatzung oder der Ausrüstung während der letzten Minute vor seinem Startsignal in dem Dreieck sein, das aus den Enden der Startlinie und der ersten Bahnmarke gebildet wird. Verstößt ein Boot gegen diese Regel und wird es erkannt, muss es ohne Anhörung disqualifiziert werden, nicht aber wenn die Wettfahrt wieder gestartet oder wieder gesegelt wird.'
+        }, {
+          id: '30.4',
+          title: 'Schwarze-Flaggen-Regel',
+          content: 'War eine schwarze Flagge gezeigt, darf ein Boot mit keinem Teil seines Rumpfes, der Besatzung oder Ausrüstung in der letzten Minute vor seinem Startsignal in dem Dreieck sein, das aus den Enden der Startlinie und der ersten Bahnmarke gebildet wird. Verstößt ein Boot gegen diese Regel und wird es erkannt, muss es ohne Anhörung disqualifiziert werden, auch wenn die Wettfahrt wieder gestartet oder wieder gesegelt wird, jedoch nicht, wenn sie vor dem Startsignal verschoben oder abgebrochen wird.\n\nWird ein allgemeiner Rückruf angezeigt oder die Wettfahrt nach dem Startsignal abgebrochen, muss das Wettfahrtkomitee seine Segelnummer vor dem nächsten Ankündigungssignal für diese Wettfahrt anzeigen. Wird die Wettfahrt wieder gestartet oder wieder gesegelt, darf es nicht daran teilnehmen. Wenn es trotzdem teilnimmt, darf seine Disqualifikation bei der Berechnung der Gesamtwertung nicht gestrichen werden.'
+        }]
       },{
         id: '31',
         title: 'Berührung einer Bahnmarke',
-        rules: []
+        rules: [],
+        content: 'In einer Wettfahrt darf ein Boot eine Start-Bahnmarke vor dem Starten und eine Bahnmarke, die den Schenkel der Bahn, auf dem es segelt, beginnt, begrenzt oder beendet, sowie eine Ziel-Bahnmarke nach dem Zieldurchgang nicht berühren.'
       },{
         id: '32',
         title: 'Abkürzung oder Abbruch nach dem Start',
-        rules: []
+        rules: [{
+          id: '32.1',
+          title: '',
+          content: 'Das Wettfahrtkomitee kann nach dem Startsignal die Bahn abkürzen (Zeigen der Flagge S mit zwei Schallsignalen) oder die Wettfahrt abbrechen (Zeigen der Flagge N, N über H oder N über A, mit 3 Schallsignalen),\n\n(a) wegen schlechter Wetterbedingungen\n\n(b) wegen ungenügenden Windes, der es unwahrscheinlich macht, dass ein Boot innerhalb des Zeitlimits durchs Ziel geht,\n\n(c) weil eine Bahnmarke fehlt oder nicht an der richtigen Position liegt, oder\n\n(d) aus jedem anderen Grund, der unmittelbar die Sicherheit oder Fairness des Wettbewerbs beeinflusst.\n\nAußerdem kann das Wettfahrtkomitee die Bahn abkürzen, um weitere vorgesehene Wettfahrten segeln zu können oder die Wettfahrt wegen seines Fehlers im Startverfahren abbrechen. Wenn jedoch ein Boot die Bahn abgesegelt hat und innerhalb eines evtl. vorgegebenen Zeitlimits durch das Ziel gegangen ist, darf das Wettfahrtkomitee die Wettfahrt nicht abbrechen, ohne die Konsequenzen für alle Boote in dieser Wettfahrt oder Wettfahrtserie abzuwägen.'
+        }, {
+          id: '32.2',
+          title: '',
+          content: 'Wenn das Wettfahrtkomitee eine Abkürzung der Bahn anzeigt (Zeigen der Flagge S mit zwei Schallsignalen), muss die Ziellinie\n\n(a) an einer zu rundenden Bahnmarke die Linie zwischen der Bahnmarke und einer Stange mit der Flagge S sein, oder\n\n(b) an einer Linie, von der die Bahn verlangt, dass sie überquert werden muss; oder\n\n(c) an einem Tor die Linie zwischen den Tor-Bahnmarken.\n\nDie abgekürzte Bahn muss angezeigt werden, bevor das erste Boot die Ziellinie überquert.'
+        }]
       },{
         id: '33',
         title: 'Änderung des nächsten Bahnschenkels',
-        rules: []
+        rules: [],
+        content: 'Das Wettfahrtkomitee kann einen Bahnschenkel, der an einer zu rundenden Bahnmarke oder einem Tor beginnt, durch Verlegung der nächsten Bahnmarke (oder der Ziellinie) verändern und die Änderung allen Booten anzeigen, bevor sie den Schenkel abzusegeln beginnen. Die nächste Bahnmarke braucht zu diesem Zeitpunkt noch nicht auf Position zu liegen.\n\n(a) Wird die Richtung des Bahnschenkels geändert, ist das Signal dafür das Zeigen der Flagge C mit wiederholten Schallsignalen und einem oder beiden Zusatzsignalen\n\n\t(1) der neuen Kompasspeilung,\n\n\t eines grünen Dreiecks bei einer Verlegung nach Steuerbord oder eines roten Rechtecks bei einer Verlegung nach Backbord.\n\n(b) Wird die Länge des Bahnschenkels verändert, ist das Signal dafür das Zeigen der Flagge C mit wiederholten Schallsignalen und einem "-", wenn die Länge verkürzt wird, oder einem "+", wenn sie verlängert wird.\n\n(c) Zur Erhaltung der Form der Bahn können die folgenden Bahnschenkel ohne weitere Anzeige verändert werden.'
       },{
         id: '34',
         title: 'Fehlende Bahnmarke',
-        rules: []
+        rules: [],
+        content: 'Wenn eine Bahnmarke entweder fehlt oder nicht auf Position liegt, muss das Wettfahrtkomitee sie, wenn möglich\n\n(a) auf ihre richtige Position zurückbringen oder durch eine neue von ähnlichem Aussehen ersetzen, oder\n\n(b) durch einen Genstand mit der Flagge M ersetzen und wiederholt Schallsignale geben.'
       },{
         id: '35',
         title: 'Zeitlimit und Wertung',
-        rules: []
+        rules: [],
+        content: 'Wenn ein Boot die Bahn gemäß Regel 28 absegelt und innerhalb des evtl. vorgegebenen Zeitlimits durchs Ziel geht, müssen alle Boote, die durch das Ziel gehen, ihren Zieldurchgangsplätzen entsprechend gewertet werden, außer die Wettfahrt wird abgebrochen. Wenn kein Boot innerhalb des Zeitlimits durchs Ziel geht, muss das Wettfahrtkomitee die Wettfahrt abbrechen.'
       },{
         id: '36',
         title: 'Wieder gestartete oder wieder gesegelte Wettfahrten',
-        rules: []
+        rules: [],
+        content: 'Wird eine Wettfahrt wieder gestartet oder wieder gesegelt, darf ein Verstoß gegen eine Regel in der ursprünglichen Wettfahrt, oder einer früheren Wiederholung eines Starts oder Segelns dieser Wettfahrt\n\n(a) ein Boot nicht an der Teilnahme hindern, außer es hat gegen Regel 30.4 verstoßen; oder\n\n(b) nicht Grund einer Bestrafung des Bootes, außer nach Regel 30.2, 30.4 oder 69 oder nach Regel 14, wenn es eine Verletzung oder einen erheblichen Schaden verursacht hat.'
       }]
     }, {
       title: 'Teil 4',
