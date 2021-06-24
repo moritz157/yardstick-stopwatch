@@ -7,10 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   navLinks = [{
-    title: 'Rennen',
+    title: 'Einfaches Rennen',
     link: 'race',
     icon: 'sports_score'
   }, {
+    title: 'Rennserien',
+    link: 'racingSeries',
+    icon: 'format_list_numbered'
+  },
+  {
     title: 'Regeln',
     link: 'rules',
     icon: 'gavel'

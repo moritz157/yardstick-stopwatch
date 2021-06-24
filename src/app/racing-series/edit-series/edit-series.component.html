@@ -1,0 +1,38 @@
+<div class='page-container'>
+    <h1>Rennserie bearbeiten</h1>
+    <span><b>Infos</b></span><br/>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type='text' [(ngModel)]='series.title'>
+    </mat-form-field><br/>
+    <mat-form-field>
+        <mat-label>Beginnt am</mat-label>
+
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" [(ngModel)]='series.start'>
+            <input matEndDate placeholder="End date" [(ngModel)]='series.end'>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field><br/>
+    <mat-form-field>
+        <mat-label>Wertungssystem</mat-label>
+        <mat-select>
+            <mat-option [value]='0'>Low-Point-System</mat-option>
+            <mat-option [value]='1'>Bonus-Point-System</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-divider></mat-divider><br/>
+    <button mat-raised-button color='primary' (click)='addSeriesBoat()'>Boot hinzufügen</button>
+    <mat-list>
+        <div mat-subheader>Gemeldete Boote</div>
+        <mat-list-item *ngFor="let boat of series.boats">
+            <div mat-line>{{ boat.name }} <span *ngIf='boat.skipper'>({{ boat.skipper }})</span></div>
+            <div mat-line>{{ boat.class.name }}</div>
+            <div class='list-item-spacer'></div>
+            <button class='boat-action' mat-button color='warn' (click)='removeSeriesBoat(boat)'>Entfernen</button>
+            <button class='boat-action' mat-button color='primary' (click)='editSeriesBoat(boat)'>Bearbeiten</button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </mat-list>
+</div>

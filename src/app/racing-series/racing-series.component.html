@@ -1,0 +1,22 @@
+<div class='page-container'>
+    <h1>Rennserien</h1>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel *ngFor='let series of allSeries'>
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{ series.title }}</mat-panel-title>
+                <mat-panel-description>
+                    <span>{{ series.start | date:'dd.MM.YYYY' }} - {{ series.end | date:'dd.MM.YYYY' }}</span>
+                    <span class='series-status' *ngIf='series.status == 0'>Geplant <mat-icon fontSet='material-icons-round'>schedule</mat-icon></span>
+                    <span class='series-status' *ngIf='series.status == 1'>Laufend <mat-icon fontSet='material-icons-round'>sailing</mat-icon></span>
+                    <span class='series-status' *ngIf='series.status == 2'>Beendet <mat-icon fontSet='material-icons-round'>done</mat-icon></span>
+                    <span class='series-status' *ngIf='series.status == 3'>Abgesagt <mat-icon fontSet='material-icons-round'>event_busy</mat-icon></span>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>{{ series.boats.length }} gemeldete Boote</p>
+            <mat-action-row>
+                <button mat-button color="primary" [routerLink]='"/series/"+series.id+"/edit"'>Bearbeiten</button>
+                <button mat-raised-button color="primary">Starten</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

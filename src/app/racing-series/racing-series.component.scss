@@ -1,0 +1,9 @@
+.series-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    mat-icon {
+        margin-left: 10px;
+    }
+}

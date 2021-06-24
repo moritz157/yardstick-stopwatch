@@ -37,7 +37,7 @@ export class RaceComponent {
       }
     },
     0: { //START
-      horn: '-',
+      horn: '.',
       flags: {
         class: false
       }
@@ -64,6 +64,8 @@ export class RaceComponent {
   boats: Boat[] = [];
 
   newBoatName: string = '';
+  newBoatSkipper: string = '';
+  newBoatCrew: string[] = [];
   newBoatClass: BoatClass = undefined;
   boatClasses: BoatClass[] = [];
 
@@ -98,9 +100,11 @@ export class RaceComponent {
   }
 
   addBoat() {
-    this.boats.push({ name: this.newBoatName, class: this.newBoatClass, finish: -1, earlyStart: false, scoring: -1 });
+    this.boats.push({ name: this.newBoatName, class: this.newBoatClass, skipper: this.newBoatSkipper, crew: this.newBoatCrew, finish: -1, earlyStart: false, scoring: -1 });
     this.newBoatName = '';
     this.newBoatClass = undefined;
+    this.newBoatSkipper = '';
+    this.newBoatCrew = [];
     window.localStorage.setItem('boats', JSON.stringify(this.boats));
   }
 
@@ -220,6 +224,16 @@ export class RaceComponent {
       if(result === undefined) return;
       boat.scoring = result;
     });
+  }
+
+  addNewBoatCrew(event) {
+    this.newBoatCrew.push(event.value);
+    event.chipInput.clear();
+    console.log('event', event);
+  }
+
+  removeNewBoatCrew(crew) {
+    this.newBoatCrew.splice(this.newBoatCrew.indexOf(crew));
   }
 
 }

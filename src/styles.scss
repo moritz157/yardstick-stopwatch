@@ -7,6 +7,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 20px;
 }
 
+mat-accordion .mat-expansion-panel-header-title,
+mat-accordion .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+mat-accordion .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media screen and (min-width: 600px) {
     .show-on-mobile {
         display: none !important;

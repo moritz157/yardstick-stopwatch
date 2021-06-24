@@ -45,7 +45,7 @@
 <mat-list *ngIf='raceState==0'>
     <div mat-subheader>Boote</div>
     <mat-list-item *ngFor="let boat of boats">
-        <div mat-line>{{ boat.name}}</div>
+        <div mat-line>{{ boat.name}} <span *ngIf='boat.skipper'>({{ boat.skipper }})</span></div>
         <div mat-line>{{ boat.class.name }}</div>
         <div class='list-item-spacer'></div>
         <button mat-icon-button (click)='removeBoat(boat)'><mat-icon>clear</mat-icon></button>
@@ -56,7 +56,7 @@
     <ng-container *ngIf='raceState<3'>
         <div mat-subheader>Boote im Rennen</div>
         <mat-list-item *ngFor="let boat of boats | isFinished:false" (click)='(((preparationSignal!==0 && preparationSignal!==2) && raceState==1 && now>=-60) || (raceState==2 && now < 30)) && openScoringDialog(boat)'>
-            <div mat-line>{{ boat.name }}</div>
+            <div mat-line>{{ boat.name }} <span *ngIf='boat.skipper'>({{ boat.skipper }})</span></div>
             <div mat-line>{{ boat.class.name }}</div>
             <div mat-line *ngIf='boat.scoring !== -1'>{{ boat.scoring | scoring }}</div>
             <div mat-line *ngIf='boat.earlyStart && now < 240 && preparationSignal < 4'><b>Fehlstart</b></div>
@@ -71,7 +71,7 @@
     </ng-container>
     <div mat-subheader>Boote im Ziel</div>
     <mat-list-item *ngFor="let boat of boats | isFinished:true">
-        <div mat-line>{{ boat.name }}</div>
+        <div mat-line>{{ boat.name }} <span *ngIf='boat.skipper'>({{ boat.skipper }})</span></div>
         <div mat-line>{{ boat.class.name }}</div>
         <div mat-line *ngIf='boat.scoring !== undefined'>{{ boat.scoring | scoring }}</div>
         <div mat-line>Echtzeit: {{ boat.finish | timer }} <b>Yardstickzeit: {{ boat.yardstickFinish | timer }}</b></div>
@@ -82,7 +82,7 @@
 <div id='newBoatForm' *ngIf='raceState == 0'>
     <span><b>Weiteres Boot hinzufügen</b></span>
     <mat-form-field>
-        <mat-label>Name</mat-label>
+        <mat-label>Segelzeichen</mat-label>
         <input matInput type='text' [(ngModel)]='newBoatName'>
     </mat-form-field>
     <mat-form-field>
@@ -90,6 +90,25 @@
         <mat-select [(value)]='newBoatClass'>
             <mat-option *ngFor='let boatClass of boatClasses' [value]='boatClass'>{{ boatClass.name }}</mat-option>
         </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Skipper (optional)</mat-label>
+        <input matInput type='text' [(ngModel)]='newBoatSkipper'>
+    </mat-form-field>
+    <mat-form-field class="example-chip-list">
+        <mat-label>Crewmitglieder (optional)</mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let crew of newBoatCrew" [selectable]="true"
+                   [removable]="true" (removed)="removeNewBoatCrew(crew)">
+            {{ crew }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Neues Crewmitglied..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="[13, 188]"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="addNewBoatCrew($event)">
+        </mat-chip-list>
     </mat-form-field>
     <button mat-raised-button color='primary' (click)='addBoat()'>Hinzufügen</button>
 </div>
